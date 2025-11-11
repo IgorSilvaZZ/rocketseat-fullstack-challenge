@@ -73,12 +73,14 @@ const generateStripeWebhook = () => {
 			'content-type': 'application/json',
 			'user-agent': 'Stripe/1.0 (+https://stripe.com/webhooks)'
 		},
-		body: JSON.stringify(body),
+		body: JSON.stringify(body, null, 2),
 		createdAt: timestamp
 	}
 }
 
 async function seed() {
+	await db.delete(webhooks)
+
 	const webhookRecords = Array.from({ length: 60 }, () =>
 		generateStripeWebhook()
 	)
